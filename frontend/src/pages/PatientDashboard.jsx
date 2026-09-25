@@ -3,6 +3,7 @@ import {
   Routes,
   Route,
   Link,
+  useLocation,
 } from "react-router-dom";
 
 import {
@@ -266,9 +267,11 @@ function PatientDashboard() {
 
           <div>
 
-            <p className="dashboard-eyebrow">
-              PATIENT DASHBOARD
-            </p>
+            {window.location.pathname === "/patient" && (
+              <p className="dashboard-eyebrow">
+                PATIENT DASHBOARD
+              </p>
+            )}
 
             <h1>
               <PageTitle />
@@ -447,9 +450,7 @@ function PatientDashboard() {
 
 function PageTitle() {
 
-  const currentPath =
-    window.location.pathname;
-
+  const { pathname: currentPath } = useLocation();
 
   if (currentPath.endsWith("/conditions")) {
     return "Conditions";
@@ -480,7 +481,7 @@ function PageTitle() {
   }
 
   if (currentPath.endsWith("/ai-summary")) {
-    return "AI Summary";
+    return "";
   }
 
   if (currentPath.endsWith("/doctors")) {
@@ -498,9 +499,7 @@ function PageTitle() {
 
 function PageDescription() {
 
-  const currentPath =
-    window.location.pathname;
-
+  const { pathname: currentPath } = useLocation();
 
   if (currentPath.endsWith("/conditions")) {
     return "Review your recorded medical conditions.";
@@ -531,7 +530,7 @@ function PageDescription() {
   }
 
   if (currentPath.endsWith("/ai-summary")) {
-    return "Generate an AI-powered summary of your medical record.";
+    return "";
   }
 
   if (currentPath.endsWith("/doctors")) {
@@ -905,13 +904,13 @@ function ConditionsSection({
 
         <div>
 
-          <p className="section-label">
+          {/* <p className="section-label">
             MEDICAL RECORD
-          </p>
+          </p> */}
 
-          <h2>
+          {/* <h2>
             Conditions
-          </h2>
+          </h2> */}
 
         </div>
 
@@ -971,13 +970,13 @@ function ObservationsSection({
 
         <div>
 
-          <p className="section-label">
+          {/* <p className="section-label">
             CLINICAL DATA
-          </p>
+          </p> */}
 
-          <h2>
+          {/* <h2>
             Observations & Lab Results
-          </h2>
+          </h2> */}
 
         </div>
 
@@ -1064,13 +1063,13 @@ function MedicationsSection({
 
         <div>
 
-          <p className="section-label">
+          {/* <p className="section-label">
             MEDICATION RECORD
-          </p>
+          </p> */}
 
-          <h2>
+          {/* <h2>
             Medications
-          </h2>
+          </h2> */}
 
         </div>
 
@@ -1141,13 +1140,13 @@ function EncountersSection({
 
         <div>
 
-          <p className="section-label">
+          {/* <p className="section-label">
             HEALTHCARE ACTIVITY
-          </p>
+          </p> */}
 
-          <h2>
+          {/* <h2>
             Encounters
-          </h2>
+          </h2> */}
 
         </div>
 
@@ -1212,13 +1211,13 @@ function ProceduresSection({
 
         <div>
 
-          <p className="section-label">
+          {/* <p className="section-label">
             MEDICAL HISTORY
-          </p>
+          </p> */}
 
-          <h2>
+          {/* <h2>
             Procedures
-          </h2>
+          </h2> */}
 
         </div>
 
@@ -1280,13 +1279,13 @@ function CarePlansSection({
 
         <div>
 
-          <p className="section-label">
+          {/* <p className="section-label">
             CARE MANAGEMENT
-          </p>
+          </p> */}
 
-          <h2>
+          {/* <h2>
             Care Plans
-          </h2>
+          </h2> */}
 
         </div>
 
@@ -1449,13 +1448,13 @@ function TimelineSection({
 
         <div>
 
-          <p className="section-label">
+          {/* <p className="section-label">
             MEDICAL HISTORY
-          </p>
+          </p> */}
 
-          <h2>
+          {/* <h2>
             Medical Timeline
-          </h2>
+          </h2> */}
 
         </div>
 
@@ -1633,23 +1632,23 @@ function DoctorsSection() {
 
         <div>
 
-          <p className="section-label">
+          {/* <p className="section-label">
             CARE TEAM
-          </p>
+          </p> */}
 
-          <h2>
+          {/* <h2>
             Find a Doctor
-          </h2>
+          </h2> */}
 
         </div>
 
       </div>
 
 
-      <p className="doctor-discovery-description">
+      {/* <p className="doctor-discovery-description">
         Browse available doctors and request a connection
         with a healthcare professional.
-      </p>
+      </p> */}
 
 
       {doctorError && (
@@ -1802,10 +1801,6 @@ function AISummarySection({
     }
   };
 
-  useEffect(() => {
-    generateSummary();
-  }, [patientId]);
-
   if (generating && !summary) {
     return (
       <section className="ai-summary-loading">
@@ -1853,6 +1848,7 @@ function AISummarySection({
         </p>
 
         <button
+          type="button"
           className="clinical-primary-button"
           onClick={generateSummary}
         >
@@ -1863,7 +1859,36 @@ function AISummarySection({
   }
 
   if (!summary) {
-    return null;
+    return (
+      <section className="ai-summary-large">
+        <div className="ai-summary-large-icon">
+          ✦
+        </div>
+
+        <p className="section-label">
+          EHR ANALYSIS AGENT
+        </p>
+
+        <h2>
+          Generate Clinical Summary
+        </h2>
+
+        <p>
+          Generate an AI-powered summary of the patient's
+          medical record, including current conditions,
+          medications, important observations, recent events,
+          and documented care plans.
+        </p>
+
+        <button
+          type="button"
+          className="generate-summary-button"
+          onClick={generateSummary}
+        >
+          ✦ Generate Summary
+        </button>
+      </section>
+    );
   }
 
   return (
@@ -1882,7 +1907,6 @@ function AISummarySection({
 
 function ClinicalSummary({
   summary,
-  ehrData,
   patientId,
   patientName,
   patientGender,
@@ -1890,764 +1914,522 @@ function ClinicalSummary({
   onRegenerate,
   generating,
 }) {
-  const sections = ehrData?.sections || {};
-
-  const conditions = sections.conditions || [];
-  const medications = sections.medications || [];
-  const observations = sections.observations || [];
-  const encounters = sections.encounters || [];
-  const procedures = sections.procedures || [];
-  const carePlans = sections.carePlans || [];
-  const allergies = sections.allergies || [];
-
   const age = calculateAge(patientBirthDate);
 
-  const normalizeStatus = (value) =>
-    String(value || "")
-      .trim()
-      .toLowerCase();
+  const hasValue = (value) =>
+    value !== undefined &&
+    value !== null &&
+    String(value).trim() !== "";
 
-  const getRecordDate = (record) =>
-    record?.date ||
-    record?.startDate ||
-    record?.onset ||
-    record?.period?.start ||
-    record?.effectiveDate ||
-    record?.authoredOn ||
-    record?.performedDate ||
-    "";
+  const hasItems = (value) =>
+    Array.isArray(value) && value.length > 0;
 
-  const getObservationValue = (observation) => {
-    if (observation?.value !== undefined && observation?.value !== null) {
-      if (typeof observation.value === "object") {
-        if (observation.value.value !== undefined) {
-          return `${observation.value.value}${observation.value.unit ? ` ${observation.value.unit}` : ""}`;
-        }
-
-        if (observation.value.text) {
-          return observation.value.text;
-        }
-      }
-
-      return `${observation.value}${observation.unit ? ` ${observation.unit}` : ""}`;
+  const formatReportItem = (item) => {
+    if (typeof item === "string") {
+      return item;
     }
 
-    if (observation?.valueQuantity) {
-      return `${
-        observation.valueQuantity.value ?? "Not available"
-      }${
-        observation.valueQuantity.unit
-          ? ` ${observation.valueQuantity.unit}`
-          : ""
-      }`;
+    if (typeof item === "object" && item !== null) {
+      return Object.entries(item)
+        .filter(
+          ([, value]) =>
+            value !== undefined &&
+            value !== null &&
+            String(value).trim() !== ""
+        )
+        .map(([key, value]) => {
+          const label = key
+            .replace(/([A-Z])/g, " $1")
+            .replace(/^./, (char) => char.toUpperCase());
+
+          return `${label}: ${value}`;
+        })
+        .join(" • ");
     }
 
-    if (observation?.valueString) {
-      return observation.valueString;
-    }
-
-    if (observation?.valueCodeableConcept?.text) {
-      return observation.valueCodeableConcept.text;
-    }
-
-    return "Not available";
+    return String(item);
   };
 
-  const activeConditions = conditions.filter((condition) => {
-    const status = normalizeStatus(condition.status);
-    return (
-      status === "active" ||
-      status === "recurrence" ||
-      status === "relapse"
-    );
+  const reportSections = [
+    {
+      key: "reasonForVisit",
+      title: "REASON FOR VISIT",
+      value: summary?.reasonForVisit,
+      type: "text",
+    },
+    {
+      key: "clinicalFindings",
+      title: "CLINICAL OBSERVATIONS",
+      value: summary?.clinicalFindings,
+      type: "list",
+    },
+    {
+      key: "assessment",
+      title: "CLINICAL ASSESSMENT",
+      value: summary?.assessment,
+      type: "list",
+    },
+    {
+      key: "investigations",
+      title: "RESULTS",
+      value: summary?.investigations,
+      type: "list",
+    },
+    {
+      key: "medications",
+      title: "MEDICATIONS",
+      value: summary?.medications,
+      type: "list",
+    },
+    {
+      key: "procedures",
+      title: "PROCEDURES",
+      value: summary?.procedures,
+      type: "list",
+    },
+    {
+      key: "clinicalImpression",
+      title: "CLINICAL IMPRESSION",
+      value: summary?.clinicalImpression,
+      type: "text",
+    },
+    {
+      key: "plan",
+      title: "PLAN",
+      value: summary?.plan,
+      type: "list",
+    },
+    {
+      key: "importantNotes",
+      title: "IMPORTANT NOTES",
+      value: summary?.importantNotes,
+      type: "list",
+    },
+  ];
+
+  const visibleSections = reportSections.filter((section) => {
+    if (section.type === "list") {
+      return hasItems(section.value);
+    }
+
+    return hasValue(section.value);
   });
-
-  const currentMedications = medications.filter((medication) => {
-    const status = normalizeStatus(medication.status);
-    return ![
-      "stopped",
-      "completed",
-      "cancelled",
-      "canceled",
-      "discontinued",
-      "inactive",
-      "entered-in-error",
-    ].includes(status);
-  });
-
-  const activeCarePlans = carePlans.filter((plan) => {
-    const status = normalizeStatus(plan.status);
-    return ![
-      "completed",
-      "cancelled",
-      "canceled",
-      "revoked",
-      "entered-in-error",
-    ].includes(status);
-  });
-
-  const medicalHistory = Array.from(
-    new Map(
-      conditions.map((condition, index) => [
-        `${condition.name || "Condition"}-${condition.status || ""}-${condition.onset || index}`,
-        condition,
-      ])
-    ).values()
-  );
-
-  const keyObservations = Array.from(
-    new Map(
-      [...observations]
-        .sort(
-          (a, b) =>
-            new Date(getRecordDate(b) || 0) -
-            new Date(getRecordDate(a) || 0)
-        )
-        .map((observation, index) => [
-          observation.name ||
-            observation.code ||
-            `Observation-${index}`,
-          observation,
-        ])
-    ).values()
-  ).slice(0, 10);
-
-  const recentEvents = [
-    ...encounters.map((encounter) => ({
-      type: "Encounter",
-      name:
-        encounter.type ||
-        encounter.reason ||
-        "Healthcare encounter",
-      detail:
-        encounter.reason ||
-        encounter.status ||
-        "Encounter recorded",
-      date: getRecordDate(encounter),
-    })),
-    ...procedures.map((procedure) => ({
-      type: "Procedure",
-      name: procedure.name || "Procedure",
-      detail: procedure.status || "Procedure recorded",
-      date: getRecordDate(procedure),
-    })),
-  ]
-    .sort(
-      (a, b) =>
-        new Date(b.date || 0) -
-        new Date(a.date || 0)
-    )
-    .slice(0, 8);
-
-  const allDates = [
-    ...conditions,
-    ...medications,
-    ...observations,
-    ...encounters,
-    ...procedures,
-    ...carePlans,
-  ]
-    .map(getRecordDate)
-    .filter(Boolean)
-    .sort(
-      (a, b) =>
-        new Date(b) - new Date(a)
-    );
-
-  const lastUpdated =
-    allDates[0] ||
-    new Date().toISOString();
-
-  const overview =
-    summary?.overview ||
-    `The available EHR contains ${activeConditions.length} active documented condition${activeConditions.length === 1 ? "" : "s"}, ${currentMedications.length} current medication record${currentMedications.length === 1 ? "" : "s"}, and ${keyObservations.length} recent measurement${keyObservations.length === 1 ? "" : "s"}.`;
-
-  const allergiesText =
-    allergies.length > 0
-      ? allergies
-          .map(
-            (allergy) =>
-              allergy.name ||
-              allergy.substance ||
-              allergy.code ||
-              "Documented allergy"
-          )
-          .join(", ")
-      : "Not documented in the available EHR.";
-
-  const insights = [
-    ...(summary?.recentChanges || []).map((item) => ({
-      ...item,
-      insightType: "Recent change",
-    })),
-    ...(summary?.trends || []).map((item) => ({
-      ...item,
-      insightType: "Trend",
-    })),
-  ].slice(0, 6);
 
   const downloadSummary = () => {
     const doc = new jsPDF();
+
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
+
     const left = 18;
     const right = pageWidth - 18;
     const contentWidth = right - left;
+
     let y = 20;
 
     const ensureSpace = (height = 10) => {
-      if (y + height > pageHeight - 18) {
+      if (y + height > pageHeight - 20) {
         doc.addPage();
         y = 20;
       }
     };
 
-    const addWrapped = (
+    const addText = (
       text,
       size = 9.5,
       bold = false,
-      gap = 3
+      gap = 4
     ) => {
-      const value = String(text || "Not available");
+      const value = String(text || "");
+
+      if (!value.trim()) {
+        return;
+      }
+
       doc.setFontSize(size);
       doc.setFont(undefined, bold ? "bold" : "normal");
+
       const lines = doc.splitTextToSize(
         value,
         contentWidth
       );
+
       const lineHeight = size <= 9 ? 4.2 : 4.8;
-      ensureSpace(lines.length * lineHeight + gap);
+
+      ensureSpace(
+        lines.length * lineHeight + gap
+      );
+
       doc.text(lines, left, y);
-      y += lines.length * lineHeight + gap;
+
+      y +=
+        lines.length * lineHeight +
+        gap;
+
       doc.setFont(undefined, "normal");
     };
 
-    const addSection = (title) => {
-      ensureSpace(16);
+    const addSectionHeading = (title) => {
+      ensureSpace(18);
+
       y += 4;
+
       doc.setFontSize(11);
+
       doc.setFont(undefined, "bold");
+
       doc.text(title, left, y);
+
       y += 6;
+
+      doc.setDrawColor(210, 225, 227);
+
+      doc.line(
+        left,
+        y,
+        right,
+        y
+      );
+
+      y += 7;
+
       doc.setFont(undefined, "normal");
     };
 
     const addBullet = (text) => {
-      const value = String(text || "Not available");
+      const value = String(text || "");
+
+      if (!value.trim()) {
+        return;
+      }
+
+      doc.setFontSize(9);
+
+      doc.setFont(undefined, "normal");
+
       const lines = doc.splitTextToSize(
         value,
-        contentWidth - 6
+        contentWidth - 8
       );
+
       const lineHeight = 4.4;
-      ensureSpace(lines.length * lineHeight + 2);
-      doc.setFontSize(9);
-      doc.setFont(undefined, "normal");
-      doc.text("•", left, y);
-      doc.text(lines, left + 5, y);
-      y += lines.length * lineHeight + 2;
+
+      ensureSpace(
+        lines.length * lineHeight + 3
+      );
+
+      doc.text(
+        "•",
+        left,
+        y
+      );
+
+      doc.text(
+        lines,
+        left + 5,
+        y
+      );
+
+      y +=
+        lines.length * lineHeight +
+        3;
     };
 
-    doc.setFontSize(18);
-    doc.setFont(undefined, "bold");
-    doc.text("PATIENT CLINICAL SUMMARY", left, y);
-    y += 7;
+    doc.setFontSize(19);
 
-    doc.setFontSize(8.5);
-    doc.setFont(undefined, "normal");
+    doc.setFont(undefined, "bold");
+
     doc.text(
-      "Summary generated from the available EHR record",
+      "PATIENT CLINICAL REPORT",
       left,
       y
     );
+
     y += 7;
 
-    addSection("PATIENT");
-    addWrapped(`Name: ${patientName}`, 9.5, true, 2);
-    addWrapped(`Patient ID: ${patientId}`, 9, false, 2);
-    addWrapped(`Age / Sex: ${age} / ${patientGender}`, 9, false, 2);
-    addWrapped(
-      `Date of Birth: ${formatDate(patientBirthDate)}`,
-      9,
-      false,
-      2
-    );
-    addWrapped(
-      `Last Updated: ${formatDate(lastUpdated)}`,
-      9,
-      false,
-      2
-    );
+    doc.setFontSize(8.5);
 
-    addSection("CURRENT STATUS");
-    addWrapped(overview, 9.5, false, 2);
+    doc.setFont(undefined, "normal");
 
-    addSection("ACTIVE PROBLEMS");
-    if (activeConditions.length === 0) {
-      addWrapped("No active conditions documented.", 9);
-    } else {
-      activeConditions.forEach((condition) => {
-        addBullet(
-          `${condition.name || "Condition"} — ${
-            condition.status || "Active"
-          }${
-            condition.onset
-              ? ` — since ${formatDate(condition.onset)}`
-              : ""
-          }`
-        );
-      });
-    }
-
-    addSection("CURRENT MEDICATIONS");
-    if (currentMedications.length === 0) {
-      addWrapped("No current medications documented.", 9);
-    } else {
-      currentMedications.forEach((medication) => {
-        addBullet(
-          `${medication.name || "Medication"} — ${
-            medication.dosage || "Dose not available"
-          } — ${
-            medication.status || "Current record"
-          }`
-        );
-      });
-    }
-    addWrapped(`Allergies: ${allergiesText}`, 8.5, false, 2);
-
-    addSection("KEY LABS / VITALS");
-    if (keyObservations.length === 0) {
-      addWrapped("No recent measurements documented.", 9);
-    } else {
-      keyObservations.forEach((observation) => {
-        addBullet(
-          `${observation.name || "Observation"}: ${
-            getObservationValue(observation)
-          }${
-            getRecordDate(observation)
-              ? ` — ${formatDate(getRecordDate(observation))}`
-              : ""
-          }`
-        );
-      });
-    }
-
-    addSection("RECENT EVENTS");
-    if (recentEvents.length === 0) {
-      addWrapped("No recent events documented.", 9);
-    } else {
-      recentEvents.forEach((event) => {
-        addBullet(
-          `${event.type}: ${event.name} — ${event.detail}${
-            event.date
-              ? ` — ${formatDate(event.date)}`
-              : ""
-          }`
-        );
-      });
-    }
-
-    addSection("DIAGNOSES / MEDICAL HISTORY");
-    if (medicalHistory.length === 0) {
-      addWrapped("No documented medical history available.", 9);
-    } else {
-      medicalHistory.forEach((condition) => {
-        addBullet(
-          `${condition.name || "Condition"} — ${
-            condition.status || "Recorded"
-          }${
-            condition.onset
-              ? ` — ${formatDate(condition.onset)}`
-              : ""
-          }`
-        );
-      });
-    }
-
-    addSection("CARE PLAN / NEXT STEPS");
-    if (activeCarePlans.length === 0) {
-      addWrapped("No active care plans documented.", 9);
-    } else {
-      activeCarePlans.forEach((plan) => {
-        addBullet(
-          `${
-            plan.title ||
-            plan.description ||
-            "Care plan"
-          } — ${plan.status || "Active"}${
-            plan.startDate
-              ? ` — ${formatDate(plan.startDate)}`
-              : ""
-          }`
-        );
-      });
-    }
-
-    addSection("IMPORTANT FLAGS");
-    if (insights.length === 0) {
-      addWrapped(
-        "No additional AI-detected chronological changes available.",
-        9
-      );
-    } else {
-      insights.forEach((insight) => {
-        addBullet(
-          `${insight.category || insight.insightType}: ${
-            insight.description || "No description available."
-          }`
-        );
-      });
-    }
-
-    ensureSpace(12);
-    doc.setFontSize(7.5);
-    doc.setFont(undefined, "italic");
     doc.text(
-      "This report reflects the information available in the patient's EHR and is not a medical diagnosis or treatment recommendation.",
+      "Generated from the patient's documented EHR information",
+      left,
+      y
+    );
+
+    y += 10;
+
+    addSectionHeading(
+      "PATIENT INFORMATION"
+    );
+
+    addText(
+      `Name: ${patientName}`,
+      9.5,
+      true,
+      2
+    );
+
+    addText(
+      `Patient ID: ${patientId}`,
+      9,
+      false,
+      2
+    );
+
+    if (hasValue(patientBirthDate)) {
+      addText(
+        `Date of Birth: ${formatDate(patientBirthDate)}`,
+        9,
+        false,
+        2
+      );
+    }
+
+    if (
+      hasValue(patientGender) &&
+      patientGender !== "Not available"
+    ) {
+      addText(
+        `Sex: ${patientGender}`,
+        9,
+        false,
+        2
+      );
+    }
+
+    if (
+      age !== undefined &&
+      age !== null &&
+      !Number.isNaN(age)
+    ) {
+      addText(
+        `Age: ${age}`,
+        9,
+        false,
+        2
+      );
+    }
+
+    visibleSections.forEach(
+      (section) => {
+        addSectionHeading(
+          section.title
+        );
+
+        if (section.type === "text") {
+          addText(
+            section.value,
+            9.5,
+            false,
+            2
+          );
+        }
+
+        if (section.type === "list") {
+          section.value.forEach(
+            (item) => {
+              addBullet(
+                formatReportItem(item)
+              );
+            }
+          );
+        }
+      }
+    );
+
+    ensureSpace(15);
+
+    doc.setFontSize(7.5);
+
+    doc.setFont(undefined, "italic");
+
+    doc.text(
+      "This report reflects information documented in the patient's EHR and does not constitute an independent medical diagnosis or treatment recommendation.",
       left,
       pageHeight - 10,
-      { maxWidth: contentWidth }
+      {
+        maxWidth: contentWidth,
+      }
     );
+
     doc.setFont(undefined, "normal");
 
     doc.save(
-      `${patientId}_Clinical_Summary.pdf`
+      `${patientId}_Clinical_Report.pdf`
     );
   };
 
   return (
-    <section className="clinical-summary-page">
-      <div className="clinical-summary-header">
+    <section className="clinical-report-page">
+
+      <div className="clinical-report-header">
+
         <div>
-          <p className="section-label">
+          {/* <p className="section-label">
             EHR ANALYSIS AGENT
-          </p>
-          <h2>PATIENT CLINICAL SUMMARY</h2>
+          </p> */}
+
+          <h2>
+            PATIENT CLINICAL REPORT
+          </h2>
+
           <p>
-            A concise view of the patient's documented medical record.
+            Concise clinical information generated from the documented patient record.
           </p>
         </div>
 
-        <div className="clinical-summary-actions">
+        <div className="clinical-report-actions">
+
           <button
+            type="button"
             className="clinical-secondary-button"
             onClick={onRegenerate}
             disabled={generating}
           >
-            ↻ {generating ? "Generating..." : "Regenerate"}
+            ↻{" "}
+            {generating
+              ? "Generating..."
+              : "Regenerate"}
           </button>
 
           <button
+            type="button"
             className="clinical-primary-button"
             onClick={downloadSummary}
           >
             ↓ Download PDF
           </button>
+
         </div>
+
       </div>
 
-      <div className="clinical-patient-card">
+      <div className="clinical-report-patient">
+
         <div className="clinical-avatar">
           {getInitials(patientName)}
         </div>
 
-        <div className="clinical-patient-main">
-          <span>PATIENT</span>
-          <h3>{patientName}</h3>
-          <p>{patientId}</p>
-        </div>
+        <div className="clinical-report-patient-main">
 
-        <div className="clinical-patient-meta">
-          <div>
-            <span>AGE</span>
-            <strong>{age}</strong>
-          </div>
-          <div>
-            <span>SEX</span>
-            <strong>{patientGender}</strong>
-          </div>
-          <div>
-            <span>DATE OF BIRTH</span>
-            <strong>{formatDate(patientBirthDate)}</strong>
-          </div>
-          <div>
-            <span>LAST UPDATED</span>
-            <strong>{formatDate(lastUpdated)}</strong>
-          </div>
-        </div>
-      </div>
+          <span>
+            PATIENT
+          </span>
 
-      <div className="clinical-summary-grid">
-        <ClinicalSummaryCard
-          className="clinical-overview-card"
-          label="CURRENT STATUS"
-          title="Clinical Overview"
-          icon="◉"
-        >
-          <p className="clinical-overview-text">
-            {overview}
+          <h3>
+            {patientName}
+          </h3>
+
+          <p>
+            {patientId}
           </p>
-        </ClinicalSummaryCard>
 
-        <ClinicalSummaryCard
-          label="ACTIVE PROBLEMS"
-          title="Current Conditions"
-          icon="♧"
-        >
-          {activeConditions.length === 0 ? (
-            <ClinicalEmptyState text="No active conditions documented." />
-          ) : (
-            <div className="clinical-list">
-              {activeConditions.map((condition, index) => (
-                <div
-                  className="clinical-list-item"
-                  key={`${condition.id || condition.name}-${index}`}
-                >
-                  <div className="clinical-list-icon">
-                    +
-                  </div>
-                  <div className="clinical-list-main">
-                    <strong>
-                      {condition.name || "Condition"}
-                    </strong>
-                    <span>
-                      {condition.status || "Active"}
-                    </span>
-                  </div>
-                  <small>
-                    {condition.onset
-                      ? formatDate(condition.onset)
-                      : "Date not available"}
-                  </small>
-                </div>
-              ))}
-            </div>
-          )}
-        </ClinicalSummaryCard>
+        </div>
 
-        <ClinicalSummaryCard
-          label="CURRENT MEDICATIONS"
-          title="Current Medications"
-          icon="✚"
-        >
-          {currentMedications.length === 0 ? (
-            <ClinicalEmptyState text="No current medications documented." />
-          ) : (
-            <>
-              <div className="clinical-list">
-                {currentMedications.map((medication, index) => (
-                  <div
-                    className="clinical-list-item"
-                    key={`${medication.id || medication.name}-${index}`}
-                  >
-                    <div className="clinical-list-icon medication">
-                      ✚
-                    </div>
-                    <div className="clinical-list-main">
-                      <strong>
-                        {medication.name || "Medication"}
-                      </strong>
-                      <span>
-                        {medication.dosage ||
-                          "Dose not available"}
-                      </span>
-                    </div>
-                    <small>
-                      {medication.status || "Current"}
-                    </small>
-                  </div>
-                ))}
+        <div className="clinical-report-patient-meta">
+
+          {hasValue(patientGender) &&
+            patientGender !== "Not available" && (
+              <div>
+                <span>SEX</span>
+                <strong>
+                  {patientGender}
+                </strong>
               </div>
-              <div className="clinical-note">
-                <strong>Allergies</strong>
-                <span>{allergiesText}</span>
-              </div>
-            </>
-          )}
-        </ClinicalSummaryCard>
+            )}
 
-        <ClinicalSummaryCard
-          className="clinical-observation-card"
-          label="KEY LABS / VITALS"
-          title="Recent Measurements"
-          icon="◌"
-        >
-          {keyObservations.length === 0 ? (
-            <ClinicalEmptyState text="No recent measurements documented." />
-          ) : (
-            <div className="clinical-observation-table">
-              <div className="clinical-table-header">
-                <span>Measurement</span>
-                <span>Value</span>
-                <span>Status</span>
-                <span>Date</span>
-              </div>
-
-              {keyObservations.map((observation, index) => (
-                <div
-                  className="clinical-table-row"
-                  key={`${observation.id || observation.name}-${index}`}
-                >
-                  <strong>
-                    {observation.name || "Observation"}
-                  </strong>
-                  <span>
-                    {getObservationValue(observation)}
-                  </span>
-                  <span className="clinical-status">
-                    {observation.status || "Recorded"}
-                  </span>
-                  <span>
-                    {formatDate(getRecordDate(observation))}
-                  </span>
-                </div>
-              ))}
-            </div>
-          )}
-        </ClinicalSummaryCard>
-
-        <ClinicalSummaryCard
-          label="RECENT EVENTS"
-          title="Recent Encounters & Procedures"
-          icon="▣"
-        >
-          {recentEvents.length === 0 ? (
-            <ClinicalEmptyState text="No recent events documented." />
-          ) : (
-            <div className="clinical-event-list">
-              {recentEvents.map((event, index) => (
-                <div
-                  className="clinical-event"
-                  key={`${event.type}-${event.name}-${index}`}
-                >
-                  <div className="clinical-event-date">
-                    {formatDate(event.date)}
-                  </div>
-                  <div className="clinical-event-main">
-                    <span>{event.type}</span>
-                    <strong>{event.name}</strong>
-                    <p>{event.detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </ClinicalSummaryCard>
-
-        <ClinicalSummaryCard
-          label="DIAGNOSES / MEDICAL HISTORY"
-          title="Medical History"
-          icon="⌁"
-        >
-          {medicalHistory.length === 0 ? (
-            <ClinicalEmptyState text="No documented medical history available." />
-          ) : (
-            <div className="clinical-history-grid">
-              {medicalHistory.map((condition, index) => (
-                <div
-                  className="clinical-history-item"
-                  key={`${condition.id || condition.name}-${index}`}
-                >
-                  <strong>
-                    {condition.name || "Condition"}
-                  </strong>
-                  <span>
-                    {condition.status || "Recorded"}
-                  </span>
-                  {condition.onset && (
-                    <small>
-                      {formatDate(condition.onset)}
-                    </small>
+          {hasValue(patientBirthDate) &&
+            patientBirthDate !== "Not available" && (
+              <div>
+                <span>DATE OF BIRTH</span>
+                <strong>
+                  {formatDate(
+                    patientBirthDate
                   )}
-                </div>
-              ))}
-            </div>
-          )}
-        </ClinicalSummaryCard>
+                </strong>
+              </div>
+            )}
 
-        <ClinicalSummaryCard
-          className="clinical-care-card"
-          label="CARE PLAN / NEXT STEPS"
-          title="Active Care Plans"
-          icon="▤"
-        >
-          {activeCarePlans.length === 0 ? (
-            <ClinicalEmptyState text="No active care plans documented." />
-          ) : (
-            <div className="clinical-list">
-              {activeCarePlans.map((plan, index) => (
-                <div
-                  className="clinical-list-item"
-                  key={`${plan.id || plan.title}-${index}`}
-                >
-                  <div className="clinical-list-icon">
-                    ✓
-                  </div>
-                  <div className="clinical-list-main">
-                    <strong>
-                      {plan.title ||
-                        plan.description ||
-                        "Care plan"}
-                    </strong>
-                    <span>
-                      {plan.status || "Active"}
-                    </span>
-                  </div>
-                  <small>
-                    {plan.startDate
-                      ? formatDate(plan.startDate)
-                      : "Date not available"}
-                  </small>
-                </div>
-              ))}
-            </div>
-          )}
-        </ClinicalSummaryCard>
+          {age !== undefined &&
+            age !== null &&
+            !Number.isNaN(age) && (
+              <div>
+                <span>AGE</span>
+                <strong>
+                  {age}
+                </strong>
+              </div>
+            )}
 
-        <ClinicalSummaryCard
-          className="clinical-flags-card"
-          label="IMPORTANT FLAGS"
-          title="AI-Detected Changes"
-          icon="✦"
-        >
-          {insights.length === 0 ? (
-            <ClinicalEmptyState text="No additional AI-detected chronological changes available." />
-          ) : (
-            <div className="clinical-ai-insights">
-              {insights.map((insight, index) => (
-                <div
-                  className="clinical-insight"
-                  key={`${insight.insightType}-${index}`}
-                >
-                  <div className="clinical-insight-icon">
-                    {insight.insightType === "Recent change"
-                      ? "!"
-                      : "↗"}
-                  </div>
-                  <div>
-                    <strong>
-                      {insight.category ||
-                        insight.insightType}
-                    </strong>
-                    <p>
-                      {insight.description ||
-                        "No description available."}
-                    </p>
-                    {insight.evidence?.length > 0 && (
-                      <small>
-                        Evidence: {insight.evidence.join(", ")}
-                      </small>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </ClinicalSummaryCard>
+          <div>
+            <span>REPORT DATE</span>
+            <strong>
+              {new Date().toLocaleDateString()}
+            </strong>
+          </div>
+
+        </div>
+
       </div>
+
+      <div className="clinical-report-body">
+
+        {visibleSections.map(
+          (section) => (
+            <section
+              className="clinical-report-section"
+              key={section.key}
+            >
+
+              <div className="clinical-report-section-heading">
+                <span></span>
+
+                <h3>
+                  {section.title}
+                </h3>
+              </div>
+
+              {section.type === "text" && (
+                <p className="clinical-report-text">
+                  {section.value}
+                </p>
+              )}
+
+              {section.type === "list" && (
+                <div className="clinical-report-list">
+
+                  {section.value.map(
+                    (item, index) => (
+                      <div
+                        className="clinical-report-list-item"
+                        key={`${section.key}-${index}`}
+                      >
+                        <span className="clinical-report-bullet">
+                          •
+                        </span>
+
+                        <p>
+                          {formatReportItem(
+                            item
+                          )}
+                        </p>
+                      </div>
+                    )
+                  )}
+
+                </div>
+              )}
+
+            </section>
+          )
+        )}
+
+      </div>
+
     </section>
   );
 }
-
 
 function ClinicalSummaryCard({
   label,

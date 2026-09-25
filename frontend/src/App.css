@@ -1022,3 +1022,69 @@
     padding: 22px 17px;
   }
 }
+
+.create-account-button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-left: 8px;
+  color: #176b78;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.create-account-button:hover {
+  color: #0f5662;
+  text-decoration: underline;
+}
+
+.create-account-button:focus {
+  outline: none;
+}
+
+.signup-gender-select {
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 1px solid #d7e2e5;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #3f5963;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  appearance: auto;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.signup-gender-select:focus {
+  border-color: #2b9d9b;
+  box-shadow: 0 0 0 3px rgba(43, 157, 155, 0.1);
+}
+
+.sign-in-button {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin-left: 8px;
+  color: #176b78;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.sign-in-button:hover {
+  color: #0f5662;
+  text-decoration: underline;
+}
+
+.sign-in-button:focus {
+  outline: none;
+}
+

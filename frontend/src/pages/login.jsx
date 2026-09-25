@@ -172,8 +172,8 @@ function Login() {
               </div>
 
               <div>
-                <strong>Secure by design</strong>
-                <span>Your medical information stays protected.</span>
+                <strong>Authenticated access</strong>
+                <span>Access medical records through secure login and authorization.</span>
               </div>
             </div>
 
@@ -217,17 +217,14 @@ function Login() {
             <div className="ai-mini-content">
               <div className="ai-mini-title">
                 Intelligent EHR processing
-                <span className="live-dot"></span>
+               
               </div>
 
               <p>
-                Documents are analyzed and organized automatically.
+                Medical documents are analyzed and structured automatically.
               </p>
             </div>
 
-            <div className="ai-arrow">
-              →
-            </div>
 
           </div>
 
@@ -455,6 +452,7 @@ function Login() {
                       <select
                         id="gender"
                         value={gender}
+                        className="signup-gender-select"
                         onChange={(e) => setGender(e.target.value)}
                         required
                       >
@@ -571,6 +569,7 @@ function Login() {
                   Already have an account?{" "}
                   <button
                     type="button"
+                    className="sign-in-button"
                     onClick={switchMode}
                   >
                     Sign in
@@ -580,11 +579,12 @@ function Login() {
                 <>
                   Don't have an account?{" "}
                   <button
-                    type="button"
-                    onClick={switchMode}
-                  >
-                    Create account
-                  </button>
+                      type="button"
+                      className="create-account-button"
+                      onClick={() => setIsSignup(true)}
+                    >
+                      Create account
+                    </button>
                 </>
               )}
             </div>

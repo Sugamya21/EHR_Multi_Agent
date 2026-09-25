@@ -1552,3 +1552,458 @@
     padding: 16px;
   }
 }
+
+/* =====================================================
+   FIND A DOCTOR
+===================================================== */
+
+.doctor-discovery-description {
+  margin: 0 0 22px;
+  color: #82939b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.doctor-discovery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.doctor-discovery-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 100px;
+  padding: 17px 18px;
+  border: 1px solid #e1eaec;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(25, 61, 73, 0.035);
+}
+
+.doctor-discovery-avatar {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e7f4f3;
+  color: #29958e;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.doctor-discovery-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.doctor-discovery-info h3 {
+  margin: 0 0 4px;
+  color: #294652;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.doctor-discovery-info p {
+  margin: 0 0 6px;
+  color: #82939b;
+  font-size: 10px;
+}
+
+.doctor-discovery-info span {
+  color: #a0adb1;
+  font-size: 9px;
+}
+
+.doctor-discovery-action {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.doctor-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 26px;
+  padding: 0 11px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.doctor-status.active {
+  background: #e7f6f2;
+  color: #29958e;
+}
+
+.doctor-status.pending {
+  background: #f8f1e7;
+  color: #b18754;
+}
+
+.doctor-connect-button {
+  min-height: 28px;
+  padding: 0 13px;
+  border: none;
+  border-radius: 8px;
+  background: #1d6c73;
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.doctor-connect-button:hover {
+  background: #175b61;
+}
+
+.doctor-connect-button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.doctor-discovery-error {
+  margin: 0 0 18px;
+  padding: 11px 14px;
+  border: 1px solid #f0d8d4;
+  border-radius: 10px;
+  background: #fff7f5;
+  color: #a8655b;
+  font-size: 10px;
+}
+
+.doctor-discovery-empty {
+  padding: 30px;
+  border: 1px solid #e3ebed;
+  border-radius: 15px;
+  background: white;
+  text-align: center;
+}
+
+.doctor-discovery-empty h3 {
+  margin: 0 0 6px;
+  color: #405761;
+  font-size: 13px;
+}
+
+.doctor-discovery-empty p {
+  margin: 0;
+  color: #909fa4;
+  font-size: 10px;
+}
+
+@media (max-width: 850px) {
+  .doctor-discovery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .doctor-discovery-card {
+    align-items: flex-start;
+  }
+
+  .doctor-discovery-action {
+    margin-left: auto;
+  }
+
+  .doctor-discovery-info h3 {
+    font-size: 12px;
+  }
+}
+
+.clinical-report-page {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+.clinical-report-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.clinical-report-header h2 {
+  margin: 5px 0 7px;
+  color: #294b58;
+  font-size: 25px;
+  font-weight: 750;
+  letter-spacing: -0.5px;
+}
+
+.clinical-report-header > div:first-child > p:last-child {
+  margin: 0;
+  color: #74878e;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.clinical-report-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.clinical-secondary-button,
+.clinical-primary-button {
+  min-height: 38px;
+  padding: 0 16px;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clinical-secondary-button {
+  border: 1px solid #d9e6e8;
+  background: #ffffff;
+  color: #41616b;
+}
+
+.clinical-secondary-button:hover:not(:disabled) {
+  border-color: #29958e;
+  color: #29958e;
+  background: #f5fbfa;
+}
+
+.clinical-primary-button {
+  border: 1px solid #29958e;
+  background: #29958e;
+  color: #ffffff;
+}
+
+.clinical-primary-button:hover {
+  background: #237f79;
+  border-color: #237f79;
+}
+
+.clinical-secondary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.clinical-report-patient {
+  display: grid;
+  grid-template-columns: auto minmax(180px, 1fr) minmax(420px, 1.5fr);
+  align-items: center;
+  gap: 20px;
+  padding: 22px;
+  margin-bottom: 18px;
+  border: 1px solid #dce9eb;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 7px 22px rgba(25, 61, 73, 0.035);
+}
+
+.clinical-avatar {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e8f5f3;
+  color: #29958e;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.clinical-report-patient-main > span,
+.clinical-report-patient-meta span {
+  display: block;
+  color: #29958e;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+}
+
+.clinical-report-patient-main h3 {
+  margin: 5px 0 3px;
+  color: #294b58;
+  font-size: 17px;
+  font-weight: 750;
+}
+
+.clinical-report-patient-main p {
+  margin: 0;
+  color: #8b9ba1;
+  font-size: 9px;
+}
+
+.clinical-report-patient-meta {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+  padding-left: 22px;
+  border-left: 1px solid #edf2f3;
+}
+
+.clinical-report-patient-meta > div {
+  min-width: 0;
+}
+
+.clinical-report-patient-meta strong {
+  display: block;
+  margin-top: 6px;
+  color: #405761;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.clinical-report-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.clinical-report-section {
+  padding: 20px 22px;
+  border: 1px solid #dfeaec;
+  border-radius: 15px;
+  background: #ffffff;
+  box-shadow: 0 7px 22px rgba(25, 61, 73, 0.035);
+}
+
+.clinical-report-section:first-child {
+  background: linear-gradient(135deg, #f7fbfb, #ffffff);
+  border-color: #d8e9e7;
+}
+
+.clinical-report-section-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.clinical-report-section-heading > span {
+  width: 4px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background: #29958e;
+}
+
+.clinical-report-section-heading h3 {
+  margin: 0;
+  color: #31505b;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.clinical-report-text {
+  max-width: 1000px;
+  margin: 0;
+  color: #60757e;
+  font-size: 11px;
+  line-height: 1.85;
+}
+
+.clinical-report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.clinical-report-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #edf2f3;
+  border-radius: 9px;
+  background: #fafcfc;
+}
+
+.clinical-report-list-item p {
+  margin: 0;
+  color: #60757e;
+  font-size: 10.5px;
+  line-height: 1.65;
+}
+
+.clinical-report-bullet {
+  flex-shrink: 0;
+  color: #29958e;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+@media (max-width: 1000px) {
+  .clinical-report-patient {
+    grid-template-columns: auto 1fr;
+  }
+
+  .clinical-report-patient-meta {
+    grid-column: 1 / -1;
+    padding-left: 0;
+    padding-top: 15px;
+    border-left: none;
+    border-top: 1px solid #edf2f3;
+  }
+}
+
+@media (max-width: 700px) {
+  .clinical-report-header {
+    flex-direction: column;
+  }
+
+  .clinical-report-actions {
+    width: 100%;
+  }
+
+  .clinical-secondary-button,
+  .clinical-primary-button {
+    flex: 1;
+  }
+
+  .clinical-report-patient {
+    grid-template-columns: auto 1fr;
+    padding: 17px;
+  }
+
+  .clinical-report-patient-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .clinical-report-section {
+    padding: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .clinical-report-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .clinical-secondary-button,
+  .clinical-primary-button {
+    width: 100%;
+  }
+
+  .clinical-report-patient {
+    grid-template-columns: 1fr;
+  }
+
+  .clinical-report-patient-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+}
